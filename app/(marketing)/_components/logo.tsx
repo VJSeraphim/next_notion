@@ -16,6 +16,14 @@ export const Logo = () => {
                 alt="logo"
                 width="40"
                 height="40"
+                className="dark:hidden"
+            />
+            <Image 
+                src="/logo-dark.svg"
+                alt="logo"
+                width="40"
+                height="40"
+                className="hidden dark:block"
             />
             <p className={cn("font-semibold", font.className)}>
                 Notion_clone
