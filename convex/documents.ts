@@ -25,6 +25,7 @@ export const getSidebar = query({
             q.eq(q.field("isArchived"), false)
         ).order("desc").collect()
         
+        return documents
     }
 })
 
