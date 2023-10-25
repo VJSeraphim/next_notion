@@ -1,19 +1,22 @@
 "use client"
 
-import { cn } from "@/lib/utils"
-import { ChevronsLeft, MenuIcon } from "lucide-react"
+import { ChevronsLeft, MenuIcon, PlusCircle, Search, Settings } from "lucide-react"
 import { usePathname } from "next/navigation"
 import { ElementRef, useEffect, useRef, useState } from "react"
 import { useMediaQuery } from 'usehooks-ts'
-import { useQuery } from "convex/react"
-import { UserItem } from "./user-item"
+import { useMutation } from "convex/react"
+import { toast } from "sonner"
 
 import { api } from "@/convex/_generated/api"
+import { cn } from "@/lib/utils"
+
+import { UserItem } from "./user-item"
+import { Item } from "./item"
 
 export const Navigation = () => {
     const pathname = usePathname()
     const isMobile = useMediaQuery("(max-width: 768px")
-    const documents = useQuery(api.documents.get)
+    const create = useMutation(api.documents.create)
 
     const isResizingRef = useRef(false)
     const sidebarRef = useRef<ElementRef<"aside">>(null)
@@ -95,6 +98,15 @@ export const Navigation = () => {
         }
     }
 
+    const handleCreate = () => {
+        const promise = create({ title: "Untitled" })
+        toast.promise(promise, {
+            loading: "Creating New Note...",
+            success: "Your Note has been Successfully created.",
+            error: "Note Creation Failed."
+        })
+    }
+
     return (
         <>
             <aside
@@ -116,16 +128,26 @@ export const Navigation = () => {
                     <ChevronsLeft className="h-6 w-6"/>
                 </div>
                 <div>
-                    <p>
-                        <UserItem />
-                    </p>
+                    <UserItem />
+                    <Item 
+                        onClick={() => {}} 
+                        label="Search"
+                        icon={Search}
+                        isSearch
+                    />
+                    <Item 
+                        onClick={() => {}} 
+                        label="Settings"
+                        icon={Settings}
+                    />
+                    <Item 
+                        onClick={handleCreate} 
+                        label="New Page"
+                        icon={PlusCircle}
+                    />
                 </div>
                 <div className="mt-4">
-                    {documents?.map((doc) => (
-                        <p key={doc._id}>
-                            {doc.title}
-                        </p>
-                    ))}
+                    
                 </div>
                 <div 
                     onMouseDown={handleMouseDown}
