@@ -102,7 +102,7 @@ export const Navigation = () => {
     const handleCreate = () => {
         const promise = create({ title: "Untitled" })
         toast.promise(promise, {
-            loading: "Creating New Note...",
+            loading: "Creating a New Note...",
             success: "Your Note has been Successfully created.",
             error: "Note Creation Failed."
         })

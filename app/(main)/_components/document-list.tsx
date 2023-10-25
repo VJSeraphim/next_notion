@@ -69,22 +69,22 @@ export const DocumentList = ({
             >
                 No pages Inside
             </p>
-            {documents.map((document) => (
-                <div key={document._id}>
+            {documents.map((doc) => (
+                <div key={doc._id}>
                     <Item
-                        id={document._id}
-                        onClick={() => onRedirect(document._id)}
-                        label={document.title}
+                        id={doc._id}
+                        onClick={() => onRedirect(doc._id)}
+                        label={doc.title}
                         icon={FileIcon}
-                        documentIcon={document.icon}
-                        active={params.documentId === document._id}
+                        documentIcon={doc.icon}
+                        active={params.documentId === doc._id}
                         level={level}
-                        onExpand={() => onExpand(document._id)}
-                        expanded={expanded[document._id]}
+                        onExpand={() => onExpand(doc._id)}
+                        expanded={expanded[doc._id]}
                     />
-                    {expanded[document._id] && (
+                    {expanded[doc._id] && (
                         <DocumentList
-                        parentDocumentId={document._id}
+                        parentDocumentId={doc._id}
                         level={level + 1}
                         />
                     )}
