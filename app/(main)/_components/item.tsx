@@ -4,10 +4,18 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { useMutation } from 'convex/react'
 import { Id } from "@/convex/_generated/dataModel"
 import { cn } from "@/lib/utils"
-import { ChevronDown, ChevronRight, LucideIcon, Plus } from "lucide-react"
+import { ChevronDown, ChevronRight, LucideIcon, MoreHorizontal, Plus, Trash } from "lucide-react"
 import { api } from "@/convex/_generated/api"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
+import { 
+    DropdownMenu,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+    DropdownMenuContent,
+    DropdownMenuItem
+ } from "@/components/ui/dropdown-menu"
+import { useUser } from "@clerk/clerk-react"
 
 interface ItemProps {
     id?: Id<"documents">
@@ -18,7 +26,7 @@ interface ItemProps {
     level?: number
     onExpand?: () => void
     label: string
-    onClick: () => void
+    onClick?: () => void
     icon: LucideIcon
 }
 
@@ -34,10 +42,12 @@ export const Item = ({
     onClick,
     icon: Icon
 }: ItemProps) => {
+    const { user } = useUser()
     const router = useRouter()
     const ChevronIcon = expanded ? ChevronDown : ChevronRight
 
     const create = useMutation(api.documents.create)
+    const archive = useMutation(api.documents.archive)
 
     const handleExpand = (
         event: React.MouseEvent<HTMLDivElement, MouseEvent>
@@ -62,6 +72,19 @@ export const Item = ({
             loading: "Creating a New Note...",
             success: "Your Note has been Successfully created.",
             error: "Note Creation Failed."
+        })
+    }
+
+    const onArchive = (
+        event: React.MouseEvent<HTMLDivElement, MouseEvent>
+    ) => {
+        if(!id) return
+        const promise = archive({ id })
+
+        toast.promise(promise, {
+            loading: "Archiving Note...",
+            success: "Your Note has been Successfully archived.",
+            error: "Failed to archive Note."
         })
     }
 
@@ -109,6 +132,38 @@ export const Item = ({
             )}
             {!!id && (
                 <div className="ml-auto flex items-center gap-x-2">
+                <DropdownMenu>
+                    <DropdownMenuTrigger
+                        asChild
+                        onClick={(e) => e.stopPropagation}
+                    >
+                        <div 
+                            role="button"
+                            className="opacity-0 group-hover:opacity-100 h-full ml-auto rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600"
+                        >
+                            <MoreHorizontal 
+                                className="h-4 w-4 text-muted-foreground"
+                            />
+                        </div>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent
+                        className="w-60"
+                        align="start"
+                        side="right"
+                        forceMount
+                    >
+                        <DropdownMenuItem
+                            onClick={() => {}}
+                        >
+                            <Trash className="w-4 h-4 mr-2"/>
+                            Delete
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <div className="text-xs text-muted-foreground p-2">
+                            Last edited by: {user?.fullName}
+                        </div>
+                    </DropdownMenuContent>
+                </DropdownMenu>
                     <div
                         role="button"
                         onClick={onCreate}
