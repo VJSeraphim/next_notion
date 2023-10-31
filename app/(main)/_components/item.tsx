@@ -102,7 +102,7 @@ export const Item = ({
             {!!id && (
                 <div
                     role="button"
-                    className="h-full rounded-sm hover:bg-neutral-300 dark:bg-neutral-600 mr-1"
+                    className="h-full rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600 mr-1"
                     onClick={handleExpand}
                 >
                     <ChevronIcon 
@@ -153,7 +153,7 @@ export const Item = ({
                         forceMount
                     >
                         <DropdownMenuItem
-                            onClick={() => {}}
+                            onClick={onArchive}
                         >
                             <Trash className="w-4 h-4 mr-2"/>
                             Delete
