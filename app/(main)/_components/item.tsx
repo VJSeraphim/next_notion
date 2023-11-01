@@ -118,8 +118,6 @@ export const Item = ({
             ) : (
                 <Icon className="h-[18px] mr-2 text-muted-foreground shrink-0"/>
             )}
-
-            <Icon className="h-[18px] mr-2 text-muted-foreground shrink-0"/>
             <span className="truncate">
                 {label}
             </span>

@@ -92,7 +92,7 @@ export const TrashBox = () => {
                         className="text-sm rounded-sm w-full hover:bg-primary/5 flex items-center justify-between text-primary"
                     >
                         <span className="pl-2 truncate">
-                            {document.title}
+                            {doc.title}
                         </span>
                         <div className="flex items-center">
                             <div

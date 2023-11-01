@@ -11,7 +11,6 @@ import { cn } from "@/lib/utils"
 
 import { Item } from "./item"
 
-
 interface DocumentListProps {
     parentDocumentId? : Id<"documents">
     level?: number
