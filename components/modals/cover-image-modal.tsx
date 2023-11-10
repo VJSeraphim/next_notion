@@ -30,7 +30,7 @@ export const CoverImageModal = () => {
         coverImage.onClose()
     }
 
-    const onChange = async(file: File) => {
+    const onChange = async(file?: File) => {
         if(file) {
             setIsSubmitting(true)
             setFile(file)
@@ -56,7 +56,7 @@ export const CoverImageModal = () => {
             <DialogContent>
                 <DialogHeader>
                     <h2 className="text-center text-lg font-semibold">
-
+                        Cover Image
                     </h2>
                 </DialogHeader>
                 <SingleImageDropzone 
