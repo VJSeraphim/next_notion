@@ -66,7 +66,7 @@ export const Item = ({
             if(!expanded) {
                 onExpand?.()
             }
-            //router.push(`/documents/${docId}`)
+            router.push(`/documents/${docId}`)
         })
         toast.promise(promise, {
             loading: "Creating a New Note...",
@@ -80,6 +80,7 @@ export const Item = ({
     ) => {
         if(!id) return
         const promise = archive({ id })
+        .then(() => router.push("/documents"))
 
         toast.promise(promise, {
             loading: "Archiving Note...",
@@ -116,7 +117,7 @@ export const Item = ({
                     {documentIcon}
                 </div>
             ) : (
-                <Icon className="h-[18px] mr-2 text-muted-foreground shrink-0"/>
+                <Icon className="h-[18px] w-[18px] mr-2 text-muted-foreground shrink-0"/>
             )}
             <span className="truncate">
                 {label}
