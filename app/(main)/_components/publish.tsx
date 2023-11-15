@@ -13,7 +13,7 @@ import {
 import { useOrigin } from "@/hooks/use-origin"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
-import { Globe } from "lucide-react"
+import { Check, Copy, Globe } from "lucide-react"
 
 interface PublishProps {
     initialData: Doc<"documents">
@@ -90,8 +90,41 @@ export const Publish = ({
                 forceMount
             >
                 {initialData.isPublished ? (
-                    <div>
-                        Published
+                    <div className="space-y-4">
+                        <div className="flex items-center">
+                            <Globe 
+                                className="text-sky-500 animate-pulse w-4 h-4"
+                            />
+                            <p className="text-xs font-medium text-sky-500">
+                                This Note is Currently live.
+                            </p>
+                        </div>
+                        <div className="flex items-center">
+                            <input 
+                                className="flex-1 px-2 text-xs border rounded-1-md h-8 bg-muted truncate"
+                                value={url}
+                                disabled
+                            />
+                            <Button
+                                onClick={onCopy}
+                                disabled={copied}
+                                className="h-8 rounded-l-none"
+                            >
+                                {copied ? (
+                                    <Check className="w-4 h-4"/>
+                                ) : (
+                                    <Copy className="w-4 h-4"/>
+                                )}
+                            </Button>
+                        </div>
+                        <Button
+                            size="sm"
+                            className="w-full text-xs"
+                            disabled={isSubmitting}
+                            onClick={onUnpublish}
+                        >
+                            Unpublish
+                        </Button>
                     </div>
                 ) : (
                     <div className="flex flex-col items-center justify-center">
